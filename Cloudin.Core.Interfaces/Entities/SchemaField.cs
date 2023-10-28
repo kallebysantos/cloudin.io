@@ -1,5 +1,9 @@
 namespace Cloudin.Core.Interfaces.Entities;
 
+public record ISchemaFieldConstraint(string DisplayName);
+
+public record ISchemaFieldType(string DisplayName, Type Type);
+
 public class SchemaField
 {
     /// <summary>
@@ -8,14 +12,19 @@ public class SchemaField
     public required string Id { get; set; }
 
     /// <summary>
+    /// ID used for accessing this schema through the API
+    /// </summary>
+    public required string AppId { get; set; }
+
+    /// <summary>
     /// Name that will be displayed
     /// </summary>
     public required string DisplayName { get; set; }
 
     /// <summary>
-    /// ID used for accessing this schema through the API
+    /// Represents the Type of the Field
     /// </summary>
-    public required string AppId { get; set; }
+    public required ISchemaFieldType Type { get; set; }
 
     /// <summary>
     /// Displays a hint for content editors and API users
@@ -28,8 +37,6 @@ public class SchemaField
     public IEnumerable<ISchemaFieldConstraint> Constraints { get; set; } =
         new HashSet<ISchemaFieldConstraint>();
 }
-
-public record ISchemaFieldConstraint(string DisplayName);
 
 public record SystemFieldConstraint : ISchemaFieldConstraint
 {
@@ -44,4 +51,14 @@ public record RequiredFieldConstraint : ISchemaFieldConstraint
 public record UniqueFieldConstraint : ISchemaFieldConstraint
 {
     public UniqueFieldConstraint() : base("Unique") { }
+}
+
+public record StringFieldType : ISchemaFieldType
+{
+    public StringFieldType() : base(DisplayName: "Text", Type: typeof(string)) { }
+}
+
+public record DateTimeFieldType : ISchemaFieldType
+{
+    public DateTimeFieldType() : base(DisplayName: "DateTime", Type: typeof(DateTime)) { }
 }
