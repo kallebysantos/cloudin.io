@@ -1,7 +1,12 @@
 namespace Cloudin.Core.Interfaces.Entities;
 
-public class SchemaEntity
+public class SchemaField
 {
+    /// <summary>
+    /// /// Unique identifier for this field
+    /// </summary>
+    public required string Id { get; set; }
+
     /// <summary>
     /// Name that will be displayed
     /// </summary>
@@ -13,17 +18,9 @@ public class SchemaEntity
     public required string AppId { get; set; }
 
     /// <summary>
-    /// Pluralized API ID for this schema
-    /// </summary>
-    public required string PluralAppId { get; set; }
-
-    /// <summary>
     /// Displays a hint for content editors and API users
     /// </summary>
     public string? Description { get; set; }
 
-    /// <summary>
-    /// Represents the fields of the Schema
-    /// </summary>
-    public IEnumerable<SchemaField> Fields { get; set; } = Enumerable.Empty<SchemaField>();
 }
+
