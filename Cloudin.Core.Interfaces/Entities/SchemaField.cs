@@ -22,5 +22,26 @@ public class SchemaField
     /// </summary>
     public string? Description { get; set; }
 
+    /// <summary>
+    /// Represents the constraints of the field
+    /// </summary>
+    public IEnumerable<ISchemaFieldConstraint> Constraints { get; set; } =
+        new HashSet<ISchemaFieldConstraint>();
 }
 
+public record ISchemaFieldConstraint(string DisplayName);
+
+public record SystemFieldConstraint : ISchemaFieldConstraint
+{
+    public SystemFieldConstraint() : base("System field") { }
+}
+
+public record RequiredFieldConstraint : ISchemaFieldConstraint
+{
+    public RequiredFieldConstraint() : base("Required") { }
+}
+
+public record UniqueFieldConstraint : ISchemaFieldConstraint
+{
+    public UniqueFieldConstraint() : base("Unique") { }
+}
